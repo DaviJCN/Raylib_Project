@@ -28,7 +28,7 @@ class Game:
 
     def run(self):
         dt = (
-            self.clock.tick() / 1000
+            self.clock.tick(60) / 1000
         )  # Variavel Delta Time, usada para funções de movimento e para limitar o fps do jogo
         while self.running:  # Loop do jogo
             # Verifica se tentou fechar a janela, caso sim, ela fecha
