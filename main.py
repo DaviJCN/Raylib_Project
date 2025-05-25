@@ -30,6 +30,7 @@ class Game:
         dt = (
             self.clock.tick(60) / 1000
         )  # Variavel Delta Time, usada para funções de movimento e para limitar o fps do jogo
+        self.mouse_motion()
         while self.running:  # Loop do jogo
             # Verifica se tentou fechar a janela, caso sim, ela fecha
             for event in pygame.event.get():
@@ -50,6 +51,9 @@ class Game:
             self.jogador_rect.centerx -= 1
         if keys[pygame.K_d]:
             self.jogador_rect.centerx += 1
-
+    
+    def mouse_motion(self):
+        position = pygame.mouse.set_pos(self.jogador_rect.x, self.jogador_rect.y)
+        
 
 Game()
