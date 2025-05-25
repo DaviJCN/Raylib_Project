@@ -52,8 +52,10 @@ class Game:
         if keys[pygame.K_d]:
             self.jogador_rect.centerx += 1
     
-    def mouse_motion(self):
-        position = pygame.mouse.set_pos(self.jogador_rect.x, self.jogador_rect.y)
+    def mouse_motion(self): # Função mouse
+        position = pygame.mouse.set_pos(self.jogador_rect.x, self.jogador_rect.y) # Pega a posição do mouse
+        pygame.mouse.set_visible(False) # define com invisível
+        
         
 
 Game()
