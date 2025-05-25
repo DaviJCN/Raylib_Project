@@ -34,11 +34,12 @@ class Game:
             # Verifica se tentou fechar a janela, caso sim, ela fecha
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.running = False        
-            self.mouse() # Chama a função
-            self.display_surface.fill("blue")
+                    self.running = False
+            self.mouse()  # Chama a função
+            self.display_surface.fill("gray33")
             self.display_surface.blit(self.jogador, self.jogador_rect)
             self.input(dt)
+            self.anti_bobby_collision()
             pygame.display.update()
 
     def input(self, dt):  # Input WASD Básico
@@ -51,16 +52,32 @@ class Game:
             self.jogador_rect.centerx -= 1
         if keys[pygame.K_d]:
             self.jogador_rect.centerx += 1
-    
-    def mouse(self): 
-        pygame.mouse.set_pos(self.jogador_rect.x, self.jogador_rect.y)  # Pega a posição do mouse
-        pygame.mouse.set_visible(False) # Define o mouse como invisível
-        self.clicado = pygame.mouse.get_just_pressed() # variavel de entrada e saida dos clicks do mouse
-        if self.clicado[0]:
-            print('asbon')
-        if self.clicado[2]:
-            print('asboner')
 
+    def mouse(self):
+        pygame.mouse.set_pos(
+            self.jogador_rect.x, self.jogador_rect.y
+        )  # Pega a posição do mouse
+        pygame.mouse.set_visible(False)  # Define o mouse como invisível
+        self.clicado = (
+            pygame.mouse.get_just_pressed()
+        )  # variavel de entrada e saida dos clicks do mouse
+        if self.clicado[0]:
+            print("asbon")
+        if self.clicado[2]:
+            print("asboner")
+
+    def anti_bobby_collision(self):
+        if self.jogador_rect.bottom > self.height:
+            self.jogador_rect.bottom = self.height
+
+        if self.jogador_rect.top < 0:
+            self.jogador_rect.top = 0
+
+        if self.jogador_rect.right > self.width:
+            self.jogador_rect.right = self.width
+
+        if self.jogador_rect.left < 0:
+            self.jogador_rect.left = 0
 
 
 Game()
