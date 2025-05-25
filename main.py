@@ -9,6 +9,7 @@ class Game:
         clock = pygame.Clock()
     
     def run():
+        
         loop = True
         while loop:
             for event in pygame.event.get():
