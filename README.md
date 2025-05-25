@@ -10,7 +10,7 @@ Nossos Objetivos:
 
 🛠️ Tecnologias Utilizadas
 
-    Python 3.9+: A linguagem de programação principal.
+    Python 3.10+: A linguagem de programação principal.
     pygame-ce: Para gráficos, som e input do jogo.
 
 🤝 Como Contribuir (em breve!)
