@@ -35,7 +35,7 @@ class Game:
                     self.running = False
                 dt = (self.clock.tick(144) / 1000)  # Variavel Delta Time, usada para funções de movimento e para limitar o fps do jogo (dentro do loop para atualizar a taxa de fps junto com o loop)
             self.mouse()  # Chama a função
-            self.display_surface.fill("gray33")
+            self.display_surface.fill("gray21")
             self.display_surface.blit(self.jogador, self.jogador_rect)
             self.input(dt)
             self.anti_bobby_collision()
