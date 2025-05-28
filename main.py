@@ -17,6 +17,7 @@ class Game:
         self.jogador = pygame.transform.scale(
             self.jogador, (60, 60)
         )  # Aumenta a imagem para 60x60
+        self.jogador_direcao = pygame.Vector2()
         self.velocidade_jogador = 500  # Define a velocidade do player
         self.jogador_rect = self.jogador.get_frect(
             center=(
@@ -46,10 +47,19 @@ class Game:
 
     def input(self, dt):  # Input WASD Básico
         keys = pygame.key.get_pressed()
-        x_direction = int(keys[pygame.K_s]) - int(keys[pygame.K_w])
-        y_direction = int(keys[pygame.K_d]) - int(keys[pygame.K_a])
-        self.jogador_rect.centery += self.velocidade_jogador * dt * x_direction
-        self.jogador_rect.centerx += self.velocidade_jogador * dt * y_direction
+        self.jogador_direcao[0] = int(keys[pygame.K_d]) - int(keys[pygame.K_a])
+        self.jogador_direcao[1] = int(keys[pygame.K_s]) - int(keys[pygame.K_w])
+        self.jogador_direcao = (
+            self.jogador_direcao.normalize()
+            if self.jogador_direcao
+            else self.jogador_direcao
+        )
+        self.jogador_rect.centerx += (
+            self.velocidade_jogador * dt * self.jogador_direcao[0]
+        )
+        self.jogador_rect.centery += (
+            self.velocidade_jogador * dt * self.jogador_direcao[1]
+        )
 
     def mouse(self):
         pygame.mouse.set_pos(
