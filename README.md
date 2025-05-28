@@ -1,4 +1,4 @@
-🎮 **Jogo Sem Nome (Em Desenvolvimento)**
+🎮 **Jogo Sem Nome**
 
 🚀 **Sobre o Projeto**
 
