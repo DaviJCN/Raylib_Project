@@ -37,7 +37,6 @@ class Game:
             dt = (
                 self.clock.tick(144) / 1000
             )  # Variavel Delta Time, usada para funções de movimento e para limitar o fps do jogo (dentro do loop para atualizar a taxa de fps junto com o loop)
-
             self.mouse()  # Chama a função
             self.display_surface.fill("gray21")
             self.display_surface.blit(self.jogador, self.jogador_rect)
@@ -61,11 +60,10 @@ class Game:
             self.velocidade_jogador * dt * self.jogador_direcao[1]
         )
 
-    def mouse(self):
-        pygame.mouse.set_pos(
-            self.jogador_rect.x, self.jogador_rect.y
-        )  # Pega a posição do mouse
-        pygame.mouse.set_visible(False)  # Define o mouse como invisível
+    def mouse(self): # Rastreia o mouse
+        mouse_x, mouse_y = pygame.mouse.get_pos() # Obtém a posição atual do mouse a cada frame
+        print(mouse_x, mouse_y) # Escreve a posição do mouse
+        pygame.mouse.set_visible(True)  # Define o mouse como invisível
         self.clicado = (
             pygame.mouse.get_just_pressed()
         )  # variavel de entrada e saida dos clicks do mouse
@@ -86,6 +84,11 @@ class Game:
 
         if self.jogador_rect.left < 0:
             self.jogador_rect.left = 0
+            
+    def range_anti_bobvy(self):
+        pass
+    
+
 
 
 Game()
