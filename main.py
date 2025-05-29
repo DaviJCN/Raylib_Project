@@ -42,8 +42,9 @@ class Game:
             self.display_surface.blit(self.jogador, self.jogador_rect)
             self.input(dt)
             self.anti_bobby_collision()
+            self.circle_anti_bobvy()
             pygame.display.update()
-
+            
     def input(self, dt):  # Input WASD Básico
         keys = pygame.key.get_pressed()
         self.jogador_direcao[0] = (
@@ -69,7 +70,7 @@ class Game:
             pygame.mouse.get_pos()
         )  # Obtém a posição atual do mouse a cada frame
         print(mouse_x, mouse_y)  # Escreve a posição do mouse
-        pygame.mouse.set_visible(False)  # Define o mouse como invisível
+        pygame.mouse.set_visible(True)  # Define o mouse como invisível
         self.clicado = (
             pygame.mouse.get_just_pressed()
         )  # variavel de entrada e saida dos clicks do mouse
@@ -91,8 +92,11 @@ class Game:
         if self.jogador_rect.left < 0:
             self.jogador_rect.left = 0
 
-    def range_anti_bobvy(self):
-        pass  # Fez a boa colocando uma função que nao faz NADA!!!
+    def circle_anti_bobvy(self):
+        circle = pygame.draw.circle(self.display_surface, (255, 255, 255), self.jogador_rect.center , radius=38, width=1)
+        
+        
+        
 
 
 Game()
