@@ -7,6 +7,7 @@ class Game:
         pygame.init()  # Inicializa os modulos do pygame
         self.width = 800
         self.height = 600
+        pygame.display.set_caption('Pedro, Morra!') # Nome da janela
         self.display_surface = pygame.display.set_mode(
             (self.width, self.height)
         )  # Cria a janela principal do jogo
