@@ -1,4 +1,5 @@
 import pygame
+import math
 from os.path import join
 
 
@@ -12,20 +13,23 @@ class Game:
             (self.width, self.height)
         )  # Cria a janela principal do jogo
         self.clock = pygame.Clock()
-        self.jogador = pygame.image.load(
-            join("anti_bobby.png")
-        )  # Carrega a imagem do anti_bobby
-        self.jogador = pygame.transform.scale(
-            self.jogador, (60, 60)
-        )  # Aumenta a imagem para 60x60
+        
+        # Imagem do jogador (anti_bobby) redimensionada para 60x60
+        self.jogador = pygame.image.load(join("anti_bobby.png"))
+        self.jogador = pygame.transform.scale(self.jogador, (60, 60))
+        
+        # Imagem da seta redimensionada para 30x30
+        self.seta_img = pygame.image.load(join("seta.png"))
+        self.seta_img = pygame.transform.scale(self.seta_img, (30, 30))
+        
+        # Direção do jogador e velocidade base
         self.jogador_direcao = pygame.Vector2()
-        self.velocidade_jogador = 500  # Define a velocidade do player
+        self.velocidade_jogador = 500
+        
+        # Posiciona o jogador no centro da tela
         self.jogador_rect = self.jogador.get_frect(
-            center=(
-                self.width / 2,
-                self.height / 2,
-            )  # Cria Rect da imagem no centro da tela
-        )
+            center=(self.width / 2, self.height / 2)        
+            )  # Cria Rect da imagem no centro da tela        
         self.running = True  # Variavel de controle de fim de jogo/fechar a janela
         self.run()  # Inicializa a funçao run, para rodar o jogo
 
@@ -37,13 +41,14 @@ class Game:
                     self.running = False
             dt = (
                 self.clock.tick(144) / 1000
-            )  # Variavel Delta Time, usada para funções de movimento e para limitar o fps do jogo (dentro do loop para atualizar a taxa de fps junto com o loop)
+            )  # Variavel Delta Time, usada para funções de movimento e para limitar o fps do jogo
             self.mouse()  # Chama a função
             self.display_surface.fill("gray21")
             self.display_surface.blit(self.jogador, self.jogador_rect)
             self.input(dt)
             self.anti_bobby_collision()
             self.circle_anti_bobvy()
+            self.draw_arrow()  # Desenha a seta
             pygame.display.update()
             
     def input(self, dt):  # Input WASD Básico
@@ -58,27 +63,18 @@ class Game:
             self.jogador_direcao.normalize()
             if self.jogador_direcao
             else self.jogador_direcao
-        )  # "Normaliza" a direção do jogador, fazendo o numero ficar entre 1 e -1, para nao alterar a velocidade do mesmo
+        )  # "Normaliza" a direção do jogador
         self.jogador_rect.centerx += (
             self.velocidade_jogador * dt * self.jogador_direcao[0]
-        )  # O jogador so mexe se a direção for diferente de 0
+        )
         self.jogador_rect.centery += (
             self.velocidade_jogador * dt * self.jogador_direcao[1]
         )
 
     def mouse(self):  # Rastreia o mouse
-        mouse_x, mouse_y = (
-            pygame.mouse.get_pos()
-        )  # Obtém a posição atual do mouse a cada frame
-        print(mouse_x, mouse_y)  # Escreve a posição do mouse
+        self.mouse_pos = pygame.mouse.get_pos()  # Obtém a posição atual do mouse
         pygame.mouse.set_visible(True)  # Define o mouse como invisível
-        self.clicado = (
-            pygame.mouse.get_just_pressed()
-        )  # variavel de entrada e saida dos clicks do mouse
-        if self.clicado[0]:
-            print("Left")
-        if self.clicado[2]:
-            print("Right")
+        self.clicado = pygame.mouse.get_just_pressed()  # variavel de entrada e saida dos clicks do mouse
 
     def anti_bobby_collision(self):  # Define a colisão do antibobby
         if self.jogador_rect.bottom > self.height:
@@ -94,9 +90,13 @@ class Game:
             self.jogador_rect.left = 0
 
     def circle_anti_bobvy(self):
-        circle = pygame.draw.circle(self.display_surface, (255, 255, 255), self.jogador_rect.center , radius=38, width=1)
+        pygame.draw.circle(self.display_surface, (255, 255, 255), self.jogador_rect.center, radius=38, width=1)
         
-        
+    def draw_arrow(self):
+        # Calcula a distância entre o personagem e o mouse
+        dx = self.mouse_pos[0] - self.jogador_rect.centerx
+        dy = self.mouse_pos[1] - self.jogador_rect.centery
+        distance = math.sqrt(dx*dx + dy*dy)
         
 
 
